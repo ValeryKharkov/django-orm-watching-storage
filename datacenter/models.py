@@ -28,3 +28,29 @@ class Visit(models.Model):
                 if self.leaved_at else 'not leaved'
             )
         )
+
+
+def get_duration(arg_visit):
+    """
+    Расчёт длительности визита
+    :param visit: визит
+    :return: объект datetime.timedelta
+    """
+
+    return arg_visit.leaved_at - arg_visit.entered_at
+
+
+def format_duration(time_object):
+    """
+    Формат времен под читабельный вид
+    :param time_object: исходный объект времени
+    :return: модифицированный объект времени
+    """
+    total_second = time_object.total_seconds()
+    hour = int(total_second // 3600)
+    minute = int((total_second - hour * 3600) // 60)
+    second = int(total_second - hour * 3600 - minute * 60)
+
+    result = f'{hour}ч {minute}мин {second}сек'
+
+    return result
